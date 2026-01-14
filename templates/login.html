@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CampusAI Login</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body class="login-page">
+
+<!-- 🌟 WELCOME TEXT -->
+<div class="login-header">
+  <h1>Welcome to CampusAI 🚀</h1>
+  <p>If you want to proceed further, please login using your account type.</p>
+</div>
+
+<div class="login-wrapper">
+
+  <!-- 👑 ADMIN LOGIN -->
+  <div class="login-card admin slideIn">
+    <h2>👑 Admin Login</h2>
+
+    <input
+      id="adminUser"
+      name="admin_email"
+      autocomplete="new-password"
+      placeholder="Admin Email">
+
+    <input
+      id="adminPass"
+      type="password"
+      name="admin_password"
+      autocomplete="new-password"
+      placeholder="Password">
+
+    <button onclick="login('admin')">Login</button>
+    <p id="adminMsg"></p>
+
+    <small>
+      New user?
+      <a href="/signup" style="color:#38bdf8">Create account</a>
+    </small>
+  </div>
+
+  <!-- 🎓 STUDENT LOGIN -->
+  <div class="login-card student slideIn">
+    <h2>🎓 Student Login</h2>
+
+    <input
+      id="studentUser"
+      name="student_email"
+      autocomplete="off"
+      placeholder="Student Email">
+
+    <input
+      id="studentPass"
+      type="password"
+      name="student_password"
+      autocomplete="new-password"
+      placeholder="Password">
+
+    <button onclick="login('student')">Login</button>
+    <p id="studentMsg"></p>
+
+    <small>
+      New user?
+      <a href="/signup" style="color:#38bdf8">Create account</a>
+    </small>
+  </div>
+
+</div>
+
+<script>
+function login(role){
+
+  const username = role === "admin"
+    ? adminUser.value.trim()
+    : studentUser.value.trim();
+
+  const password = role === "admin"
+    ? adminPass.value.trim()
+    : studentPass.value.trim();
+
+  if(!username || !password){
+    alert("Please enter email and password");
+    return;
+  }
+
+  fetch("/login",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({
+      username: username,
+      password: password,
+      role: role   // 🔥 role sent to backend
+    })
+  })
+  .then(async res => {
+    const data = await res.json();
+    return {status: res.status, body: data};
+  })
+  .then(result => {
+
+    if(result.status === 200 && result.body.status === "success"){
+      window.location.href="/";
+    }
+    else {
+      const msg = result.body.message || "Invalid Login";
+
+      if(role === "admin"){
+        adminMsg.innerText = "❌ " + msg;
+      } else {
+        studentMsg.innerText = "❌ " + msg;
+      }
+    }
+
+  })
+  .catch(() => {
+    alert("Server error. Try again.");
+  });
+}
+</script>
+
+</body>
+</html>

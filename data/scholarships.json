@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "name": "Merit Scholarship",
+    "benefit": "50% tuition waiver",
+    "course": "mca",
+    "min_year": 1,
+    "category": "any",
+    "max_income": 50000
+  },
+  {
+    "id": 2,
+    "name": "Need-Based Scholarship",
+    "benefit": "Full tuition waiver",
+    "course": "any",
+    "min_year": 1,
+    "category": "any",
+    "max_income": 30000
+  }
+]

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CampusAI</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<!-- PARTICLES -->
+<div id="particles"></div>
+
+<!-- NAVBAR -->
+<header class="navbar">
+  <div class="brand">🎓 CampusAI</div>
+  <nav>
+    <a onclick="navClick('home')">Home</a>
+    <a onclick="navClick('about')">About</a>
+    <a onclick="navClick('app')">Launch</a>
+    <a onclick="navClick('admin')">Admin</a>
+    <a href="/logout">Logout</a>
+  </nav>
+</header>
+
+<!-- HOME -->
+<section id="home" class="hero slideIn">
+  <h1>Welcome to CampusAI 🚀</h1>
+  <p>Your AI-powered campus assistant</p>
+  <button onclick="navClick('app')">Launch App</button>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="container about-grid hidden slideIn">
+
+  <div class="card about-card">
+    <h2>🎯 What is CampusAI?</h2>
+    <p>
+CampusAI is an AI-powered virtual assistant designed to simplify how students interact with campus information systems.
+In many universities, students struggle to find accurate information regarding exams, library schedules, scholarship
+opportunities, notices, and administrative updates because the data is scattered across multiple websites, portals,
+notice boards, and messaging groups. This fragmentation often causes confusion, missed deadlines, and unnecessary stress.
+
+CampusAI centralizes all this information into one intelligent platform where users can simply ask questions in natural
+language and receive instant responses. The system leverages Natural Language Processing (NLP) to understand user intent
+and intelligently retrieve the most relevant data. Instead of navigating complex portals, students communicate with a
+smart assistant that behaves like a helpful guide.
+
+In addition to answering questions, CampusAI provides automated scholarship evaluation based on course, academic year,
+category, and income. This enables students to understand eligibility clearly and make informed decisions about financial
+aid opportunities. The platform is designed to scale and integrate with real databases, making it suitable for real-world
+campus deployments.
+    </p>
+  </div>
+
+  <div class="card about-card">
+    <h2>⚡ Why CampusAI?</h2>
+    <p>
+CampusAI improves efficiency, accessibility, and transparency across campus operations. Students save time by avoiding
+manual searches and repetitive inquiries. Instead of contacting administrative staff for simple questions, the AI provides
+instant responses around the clock. This reduces workload on staff while improving the student experience.
+
+The analytics dashboard enables administrators to monitor how the system is used, which topics are frequently queried,
+and where students face confusion. These insights allow institutions to improve communication strategies and optimize
+services. The scholarship module increases awareness of financial aid options and eliminates ambiguity by clearly
+explaining eligibility criteria.
+
+From a technical perspective, CampusAI demonstrates real-world full-stack engineering using Flask, MongoDB authentication,
+machine learning models, REST APIs, and responsive UI design. It showcases scalable architecture suitable for enterprise
+deployment while remaining lightweight for academic environments. The platform is modular and future-ready, allowing easy
+integration of additional AI capabilities such as voice interaction and predictive analytics.
+    </p>
+  </div>
+
+  <div class="card about-card">
+    <h2>🚀 Vision</h2>
+    <p>
+The long-term vision of CampusAI is to create a fully intelligent digital campus ecosystem where students, faculty, and
+administrators interact seamlessly through AI-driven automation. The platform aims to evolve into a smart academic
+companion capable of delivering personalized learning support, proactive notifications, predictive recommendations, and
+intelligent scheduling.
+
+Future enhancements may include multilingual support, voice-based interaction, mobile application integration,
+real-time academic alerts, and advanced analytics dashboards. CampusAI also aims to integrate securely with official
+university databases while maintaining strict privacy and data protection standards.
+
+Ultimately, CampusAI seeks to reduce information barriers, improve accessibility, enhance transparency, and empower
+educational institutions with actionable insights. It represents a step toward smarter campuses driven by artificial
+intelligence and human-centered design.
+    </p>
+  </div>
+
+</section>
+
+<!-- APP -->
+<section id="app" class="container hidden slideIn">
+
+  <!-- LEFT SIDEBAR -->
+  <div class="card categories">
+    <h2>📂 Categories</h2>
+    <button onclick="switchCategory('exam')">📚 Exams</button>
+    <button onclick="switchCategory('scholarship')">🎓 Scholarship</button>
+    <button onclick="switchCategory('library')">📖 Library</button>
+    <button onclick="switchCategory('notice')">📢 Notices</button>
+    <button onclick="switchCategory('general')">💬 General</button>
+  </div>
+
+  <!-- CHAT -->
+  <div class="card">
+    <h2>💬 Chat</h2>
+    <div id="chatBox" class="chat-box"></div>
+    <input id="userInput" placeholder="Ask something...">
+    <button onclick="sendMessage()">Send</button>
+  </div>
+
+  <!-- SCHOLARSHIP -->
+  <div class="card">
+    <h2>🎓 Scholarship</h2>
+    <input id="course" placeholder="Course">
+    <input id="year" type="number" placeholder="Year">
+    <input id="category" placeholder="Category">
+    <input id="income" type="number" placeholder="Income">
+    <button onclick="getScholarship()">Check</button>
+  </div>
+
+</section>
+
+<!-- ADMIN -->
+<section id="admin" class="container hidden slideIn">
+  <div class="card">
+    <h2>📊 Analytics Dashboard</h2>
+
+    <div class="kpi-row">
+      <div class="kpi">
+        <h3 id="totalQueries">0</h3>
+        <span>Total Queries</span>
+      </div>
+      <div class="kpi">
+        <h3 id="examCount">0</h3>
+        <span>Exam Queries</span>
+      </div>
+      <div class="kpi">
+        <h3 id="scholarshipCount">0</h3>
+        <span>Scholarship Queries</span>
+      </div>
+    </div>
+
+    <canvas id="analyticsChart"></canvas>
+  </div>
+</section>
+
+<footer class="footer">
+⚡ Built for Hackathon • CampusAI
+</footer>
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

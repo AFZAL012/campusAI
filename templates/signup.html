@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Create Account • CampusAI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body class="login-page">
+
+<!-- 🌟 HEADER TEXT -->
+<div class="login-header center">
+  <h1>Welcome, New User 👋</h1>
+  <p>You can enroll yourself by proceeding with account creation.</p>
+</div>
+
+<!-- 🧾 SIGNUP CARD -->
+<div class="login-wrapper">
+
+  <div class="login-card student slideIn">
+
+    <h2>📄 Create Account</h2>
+
+    <!-- EMAIL -->
+    <input
+      id="email"
+      type="email"
+      placeholder="Enter your email"
+      autocomplete="off"
+      autocorrect="off"
+      autocapitalize="off"
+      spellcheck="false"
+    >
+
+    <!-- PASSWORD -->
+    <input
+      id="password"
+      type="password"
+      placeholder="Create password"
+      autocomplete="new-password"
+    >
+
+    <button onclick="register()">Register</button>
+
+    <p id="msg"></p>
+
+    <small>
+      Already have an account?
+      <a href="/login" style="color:#38bdf8">Login</a>
+    </small>
+
+  </div>
+
+</div>
+
+<script>
+function register(){
+
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
+  const msg = document.getElementById("msg");
+
+  if(!email || !password){
+    msg.innerText = "❌ Please enter email and password";
+    return;
+  }
+
+  fetch("/signup",{
+    method:"POST",
+    headers:{ "Content-Type":"application/json" },
+    body: JSON.stringify({ email, password })
+  })
+  .then(async res => {
+    const data = await res.json();
+    return { status: res.status, body: data };
+  })
+  .then(result => {
+
+    if(result.status === 200 && result.body.status === "success"){
+      alert("✅ Account created successfully! Please login.");
+      window.location.href = "/login";
+    }
+    else {
+      msg.innerText = "❌ " + (result.body.message || "Signup failed");
+    }
+
+  })
+  .catch(() => {
+    msg.innerText = "❌ Server error. Please try again.";
+  });
+
+}
+</script>
+
+</body>
+</html>
